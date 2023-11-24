@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::post('register', [AuthController::class, 'register']);
+//Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('jwt-verify')->group(function() {
@@ -24,7 +24,6 @@ Route::middleware('jwt-verify')->group(function() {
     Route::post("users/", [UserController::class, "store"]);
     Route::put("users/{user}", [UserController::class, "update"]);
     Route::delete("users/{user}", [UserController::class, "destroy"]);
-
 
     Route::post('logout', [AuthController::class, 'logout']);
 

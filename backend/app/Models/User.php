@@ -15,10 +15,10 @@ class User extends Authenticatable implements JWTSubject
     'last_name',
     'dni',
     'email',
+    'password',
     'points',
     ];
     protected $hidden = [
-     'password',
      'role'
     ];
     public function getJWTIdentifier(){

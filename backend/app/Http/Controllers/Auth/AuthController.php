@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Contracts\Providers\JWT;
@@ -12,13 +13,13 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
+    public function register(StoreUserRequest $request){
         $this->validate($request, [
-            'name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'dni' => 'required|unique:users',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6',
+            'name' => 'required',
+            'last_name' => 'required',
+            'dni' => 'required|unique:users,dni',
+            'email' => 'required|email|unique:users,email',
+            'points' => 'integer|min:0',
         ]);
 
         $user = User::create([
