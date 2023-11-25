@@ -102,7 +102,7 @@ const Users = () => {
 
   const handleUpdateUser = () => {
     const token = localStorage.getItem('token');
-
+  
     fetch(`http://127.0.0.1:8000/api/users/${selectedUserId}`, {
       method: 'PUT',
       headers: {
@@ -113,7 +113,17 @@ const Users = () => {
     })
       .then(response => response.json())
       .then(data => {
-        setUsers(users.map(user => (user.id === selectedUserId ? data : user)));
+        // Update local state only after a successful API response
+        fetch('http://127.0.0.1:8000/api/users', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        })
+          .then(response => response.json())
+          .then(updatedUsers => setUsers(updatedUsers))
+          .catch(error => console.error('Error fetching users after update:', error));
+  
         setNewUser({
           name: '',
           last_name: '',
@@ -127,6 +137,9 @@ const Users = () => {
       })
       .catch(error => console.error('Error updating user:', error));
   };
+  
+  
+  
 
   const handleDeleteUser = (userId) => {
     Swal.fire({
