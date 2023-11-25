@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra una lista de usuarios con rol 0.
      */
     public function index()
     {
@@ -17,7 +17,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena un nuevo usuario en el almacenamiento.
      */
     public function store(Request $request)
     {
@@ -29,6 +29,7 @@ class UserController extends Controller
             'password' => 'required',
             'points' => 'integer|min:0',
         ]);
+
         User::create([
             'name' => $request->name,
             'last_name' => $request->last_name,
@@ -38,20 +39,19 @@ class UserController extends Controller
             'points' => $request->points,
         ]);
 
-        return response()->json("Usuario registrado.");
+        return response()->json(['status' => 'Usuario registrado.'], 201);
     }
 
     /**
-     * Display the specified resource.
+     * Muestra el usuario especificado.
      */
     public function show($id)
     {
-
         return response()->json(User::where('id', $id)->get());
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza el usuario especificado en el almacenamiento.
      */
     public function update(StoreUserRequest $request, User $user)
     {
@@ -69,22 +69,19 @@ class UserController extends Controller
             'last_name' => $request->last_name,
             'dni' => $request->dni,
             'email' => $request->email,
-            'password' => bcrypt($request->password), // Hash the password
+            'password' => bcrypt($request->password),
             'points' => $request->points,
         ]);
 
-        return response()->json("Usuario actualizado");
+        return response()->json(['status' => 'Usuario actualizado'], 200);
     }
 
-
-
-
     /**
-     * Remove the specified resource from storage.
+     * Elimina el usuario especificado del almacenamiento.
      */
     public function destroy(User $user)
     {
         $user->delete();
-        return response()->json("Usuario eliminado.");
+        return response()->json(['status' => 'Usuario eliminado.'], 200);
     }
 }

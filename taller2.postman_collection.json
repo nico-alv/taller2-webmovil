@@ -1,0 +1,396 @@
+{
+	"info": {
+		"_postman_id": "7878fea0-1b7d-4e5d-84a9-f3972a2cb270",
+		"name": "taller2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29363891"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Guardar token en variable de colección\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.collectionVariables.set(\"token\", jsonData.token);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Ochietto",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Jaqamain3pals",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Ochietto",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "Jaqamain3pals",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-store",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Registro exitoso de usuario\", function () {\r",
+							"   \r",
+							"    pm.response.to.have.status(201); \r",
+							"\r",
+							"    var jsonData;\r",
+							"    try {\r",
+							"        jsonData = JSON.parse(pm.request.body);\r",
+							"    } catch (e) {\r",
+							"        console.error(\"Error parsing request body as JSON:\", e);\r",
+							"    }\r",
+							"\r",
+							"    if (jsonData && jsonData.name) {\r",
+							"        pm.expect(jsonData.name).to.eql(\"EjemploNombre\");\r",
+							"    } else {\r",
+							"        console.error(\"Nombre no encontrado en el cuerpo de la solicitud\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"EjemploNombre\",\r\n    \"last_name\": \"EjemploApellido\",\r\n    \"dni\": \"12345678\",\r\n    \"email\": \"ejemplo@email.com\",\r\n    \"password\": \"EjemploPassword123\",\r\n    \"points\": 100\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/users/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-index",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Obtener lista de usuarios exitosa\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"    pm.expect(pm.response.json()).to.be.an('array');\r",
+							"\r",
+							"    pm.expect(pm.response.json()).to.have.length.above(0);\r",
+							"\r",
+							"    var firstUser = pm.response.json()[0];\r",
+							"    pm.expect(firstUser).to.have.property('id');\r",
+							"    pm.expect(firstUser).to.have.property('name');\r",
+							"    pm.expect(firstUser).to.have.property('last_name');\r",
+							"    pm.expect(firstUser).to.have.property('dni');\r",
+							"    pm.expect(firstUser).to.have.property('email');\r",
+							"    pm.expect(firstUser).to.have.property('password');\r",
+							"    pm.expect(firstUser).to.have.property('points');\r",
+							"    pm.expect(firstUser).to.have.property('created_at');\r",
+							"    pm.expect(firstUser).to.have.property('updated_at');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/users",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Actualización de usuario exitosa\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"    var updatedUser = pm.response.json();\r",
+							"\r",
+							"    pm.expect(updatedUser).to.not.be.empty;\r",
+							"\r",
+							"    pm.expect(updatedUser).to.have.property('status', 'Usuario actualizado');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"John\",\r\n  \"last_name\": \"Doe\",\r\n  \"dni\": \"123456789\",\r\n  \"email\": \"john.doe@example.com\",\r\n  \"password\": \"secret123\",\r\n  \"points\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/users/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Obtener usuario específico exitoso\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200); \r",
+							"\r",
+							"    var users = pm.response.json();\r",
+							"\r",
+							"    pm.expect(users.length).to.be.above(0);\r",
+							"\r",
+							"    var user = users[0];\r",
+							"    pm.expect(user).to.have.property('id');\r",
+							"    pm.expect(user.id).to.eql(2); \r",
+							"    pm.expect(user).to.have.property('name', 'John');\r",
+							"    pm.expect(user).to.have.property('last_name', 'Doe');\r",
+							"    pm.expect(user).to.have.property('dni', '123456789');\r",
+							"    pm.expect(user).to.have.property('email', 'john.doe@example.com');\r",
+							"    pm.expect(user).to.have.property('password');\r",
+							"    pm.expect(user).to.have.property('points', 100);\r",
+							"\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/users/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Cierre de sesión exitoso\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"    var responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.have.property('message', 'Cierre de sesión exitoso.');\r",
+							"\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/logout",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}

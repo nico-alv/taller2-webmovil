@@ -1,0 +1,208 @@
+{
+	"id": "a5b50b80-e89e-4e41-85eb-79131bc265d6",
+	"name": "taller2",
+	"timestamp": "2023-11-25T01:42:31.755Z",
+	"collection_id": "29363891-7878fea0-1b7d-4e5d-84a9-f3972a2cb270",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 6,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2023-11-25T01:42:29.831Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "d35dd792-70d6-4538-a8f9-d91c1b5cd56e",
+			"name": "login",
+			"url": "http://127.0.0.1:8000/api/login",
+			"time": 362,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Guardar token en variable de colección": true
+			},
+			"testPassFailCounts": {
+				"Guardar token en variable de colección": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				362
+			],
+			"allTests": [
+				{
+					"Guardar token en variable de colección": true
+				}
+			]
+		},
+		{
+			"id": "67aeeb4c-aaed-4545-8fe4-4be43c435c0b",
+			"name": "user-store",
+			"url": "http://127.0.0.1:8000/api/users/",
+			"time": 345,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Registro exitoso de usuario": true
+			},
+			"testPassFailCounts": {
+				"Registro exitoso de usuario": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				345
+			],
+			"allTests": [
+				{
+					"Registro exitoso de usuario": true
+				}
+			]
+		},
+		{
+			"id": "1c859574-17e4-49a0-ba26-e28fb161762d",
+			"name": "user-index",
+			"url": "http://127.0.0.1:8000/api/users",
+			"time": 133,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Obtener lista de usuarios exitosa": true
+			},
+			"testPassFailCounts": {
+				"Obtener lista de usuarios exitosa": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				133
+			],
+			"allTests": [
+				{
+					"Obtener lista de usuarios exitosa": true
+				}
+			]
+		},
+		{
+			"id": "8f0f8859-caf0-49d0-b900-8581880dc77b",
+			"name": "user-update",
+			"url": "http://127.0.0.1:8000/api/users/2",
+			"time": 332,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Actualización de usuario exitosa": true
+			},
+			"testPassFailCounts": {
+				"Actualización de usuario exitosa": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				332
+			],
+			"allTests": [
+				{
+					"Actualización de usuario exitosa": true
+				}
+			]
+		},
+		{
+			"id": "502ca718-7a9a-4dad-ad94-193b2ebb350c",
+			"name": "user-get",
+			"url": "http://127.0.0.1:8000/api/users/2",
+			"time": 133,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Obtener usuario específico exitoso": true
+			},
+			"testPassFailCounts": {
+				"Obtener usuario específico exitoso": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				133
+			],
+			"allTests": [
+				{
+					"Obtener usuario específico exitoso": true
+				}
+			]
+		},
+		{
+			"id": "5b759a3e-11bc-488b-8dba-ea961ba64709",
+			"name": "logout",
+			"url": "http://127.0.0.1:8000/api/logout",
+			"time": 128,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Cierre de sesión exitoso": true
+			},
+			"testPassFailCounts": {
+				"Cierre de sesión exitoso": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				128
+			],
+			"allTests": [
+				{
+					"Cierre de sesión exitoso": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 1433,
+	"collection": {
+		"requests": [
+			{
+				"id": "d35dd792-70d6-4538-a8f9-d91c1b5cd56e",
+				"method": "POST"
+			},
+			{
+				"id": "67aeeb4c-aaed-4545-8fe4-4be43c435c0b",
+				"method": "POST"
+			},
+			{
+				"id": "1c859574-17e4-49a0-ba26-e28fb161762d",
+				"method": "GET"
+			},
+			{
+				"id": "8f0f8859-caf0-49d0-b900-8581880dc77b",
+				"method": "PUT"
+			},
+			{
+				"id": "502ca718-7a9a-4dad-ad94-193b2ebb350c",
+				"method": "GET"
+			},
+			{
+				"id": "5b759a3e-11bc-488b-8dba-ea961ba64709",
+				"method": "POST"
+			}
+		]
+	}
+}

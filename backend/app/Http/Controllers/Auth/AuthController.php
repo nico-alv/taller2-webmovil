@@ -13,64 +13,58 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-    public function register(StoreUserRequest $request){
-        $this->validate($request, [
-            'name' => 'required',
-            'last_name' => 'required',
-            'dni' => 'required|unique:users,dni',
-            'email' => 'required|email|unique:users,email',
-            'points' => 'integer|min:0',
-        ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'last_name' => $request->last_name,
-            'dni' => $request->dni,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
-
-        $token = JWTAuth::fromUser($user);
-
-        return response()->json([
-            'user' => $user,
-            'token' => $token,
-        ], 201);
-    }
-    public function login(LoginRequest $request){
+    /**
+     * Procesa la solicitud de inicio de sesión y emite un token JWT si las credenciales son válidas.
+     *
+     * @param  \App\Http\Requests\Auth\LoginRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function login(LoginRequest $request)
+    {
         $credentials = $request->only('name', 'password');
 
         try {
+            // Intenta generar un token JWT con las credenciales proporcionadas.
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json([
-                    'error' => 'Invalid credentials.'
+                    'error' => 'Credenciales inválidas.'
                 ], 400);
             }
 
+            // Obtiene el usuario asociado al token JWT.
             $user = JWTAuth::user();
 
+            // Verifica si el usuario tiene el rol correcto para acceder.
             if (!$user->role == 1) {
                 return response()->json([
-                    'error' => 'Invalid credentials.'
+                    'error' => 'Credenciales inválidas.'
                 ], 400);
             }
 
         } catch (JWTException $e) {
             return response()->json([
-                'error' => 'Token error.'
+                'error' => 'Error de token.'
             ], 500);
         }
 
         return response()->json(compact('token'));
     }
 
+    /**
+     * Invalida el token JWT actual, cerrando la sesión del usuario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logout(Request $request)
     {
         try {
+            // Invalida el token JWT actual.
             JWTAuth::invalidate(JWTAuth::getToken());
-            return response()->json(['message' => 'Logout successful.']);
+            return response()->json(['message' => 'Cierre de sesión exitoso.']);
         } catch (JWTException $e) {
-            return response()->json(['error' => 'Failed to logout.'], 500);
+            return response()->json(['error' => 'Fallo al cerrar sesión.'], 500);
         }
     }
 
