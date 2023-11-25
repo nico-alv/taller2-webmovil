@@ -56,7 +56,7 @@ const Login = () => {
 
         <div className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
           <form>
-            <label htmlFor="name" className="block mb-2">Usuario:</label>
+            <label htmlFor="name" className="block mb-2">Usuario</label>
             <input
               type="text"
               id="name"
@@ -66,7 +66,7 @@ const Login = () => {
               className="w-full rounded-md border p-2 mb-4"
             />
 
-            <label htmlFor="password" className="block mb-2">Contraseña:</label>
+            <label htmlFor="password" className="block mb-2">Contraseña</label>
             <input
               type="password"
               id="password"

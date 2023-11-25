@@ -179,9 +179,9 @@ const Users = () => {
   return (
     <div>
       {/* Navbar */}
-      <div className="bg-gray-800 text-white p-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Sistema de administración de usuarios</h1>
-        <button onClick={handleLogout}>Cerrar sesión</button>
+      <div className="bg-gray-800 text-white p-4 flex flex-col md:flex-row justify-between items-center">
+        <h1 className="text-2xl font-bold mb-2 md:mb-0">Sistema de administración de usuarios</h1>
+        <button onClick={handleLogout} className="mt-2 md:mt-0">Cerrar sesión</button>
       </div>
 
       {/* Create User Button */}
@@ -193,15 +193,17 @@ const Users = () => {
   className="p-2 border border-gray-300 rounded mb-4 w-full"
 />
 
+<div className="flex-grow overflow-x-auto">
 
-  <table className="border w-full">
+<table className="border w-full table-auto text-sm md:text-base">
+
     <thead>
       <tr>
-        <th className="border px-4 py-2">Name</th>
-        <th className="border px-4 py-2">Last Name</th>
-        <th className="border px-4 py-2">DNI</th>
-        <th className="border px-4 py-2">Email</th>
-        <th className="border px-4 py-2">Points</th>
+        <th className="border px-4 py-2">Nombres</th>
+        <th className="border px-4 py-2">Apellidos</th>
+        <th className="border px-4 py-2">RUT/DNI</th>
+        <th className="border px-4 py-2">Correo</th>
+        <th className="border px-4 py-2">Puntos</th>
         <th className="border px-4 py-2">
           <button
             onClick={() => setIsModalOpen(true)}
@@ -214,12 +216,12 @@ const Users = () => {
     </thead>
     <tbody>
   {filteredUsers.map((user) => (
-    <tr key={user.id}>
-      <td className="border px-4 py-2">{user.name}</td>
-      <td className="border px-4 py-2">{user.last_name}</td>
-      <td className="border px-4 py-2">{user.dni}</td>
-      <td className="border px-4 py-2">{user.email}</td>
-      <td className="border px-4 py-2">{user.points}</td>
+    <tr key={user.id} className='md:table-row'>
+      <td className="border px-4 py-2 text-center">{user.name}</td>
+      <td className="border px-4 py-2 text-center">{user.last_name}</td>
+      <td className="border px-4 py-2 text-center">{user.dni}</td>
+      <td className="border px-4 py-2 text-center">{user.email}</td>
+      <td className="border px-4 py-2 text-center">{user.points}</td>
       <td className="border px-4 py-2 flex items-center justify-center space-x-2">
         <button onClick={() => { setIsModalOpen(true); setSelectedUserId(user.id); }}>
           <i className="fas fa-pencil-alt"></i>
@@ -232,6 +234,7 @@ const Users = () => {
   ))}
 </tbody>
   </table>
+  </div>
 
       {/* Create/Edit User Modal */}
       <Modal isOpen={isModalOpen} onRequestClose={(closeModal) => { setIsModalOpen(false); setSelectedUserId(null); }}>
