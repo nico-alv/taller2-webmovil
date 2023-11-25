@@ -4,18 +4,30 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\StoreUserRequest;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Contracts\Providers\JWT;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use OpenApi\Annotations as OA;
 
 class AuthController extends Controller
 {
 
     /**
-     * Procesa la solicitud de inicio de sesión y emite un token JWT si las credenciales son válidas.
+     * @OA\Post(
+     *     path="/api/auth/login",
+     *     summary="Iniciar sesión y obtener un token JWT.",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="password", type="string"),
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Inicio de sesión exitoso. Se devuelve un token JWT."),
+     *     @OA\Response(response="400", description="Credenciales inválidas."),
+     *     @OA\Response(response="500", description="Error de token."),
+     * )
      *
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\JsonResponse
@@ -52,7 +64,12 @@ class AuthController extends Controller
     }
 
     /**
-     * Invalida el token JWT actual, cerrando la sesión del usuario.
+     * @OA\Post(
+     *     path="/api/auth/logout",
+     *     summary="Cerrar sesión y invalidar el token JWT actual.",
+     *     @OA\Response(response="200", description="Cierre de sesión exitoso."),
+     *     @OA\Response(response="500", description="Fallo al cerrar sesión."),
+     * )
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
@@ -67,5 +84,4 @@ class AuthController extends Controller
             return response()->json(['error' => 'Fallo al cerrar sesión.'], 500);
         }
     }
-
 }

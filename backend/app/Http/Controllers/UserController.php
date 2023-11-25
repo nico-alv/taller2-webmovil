@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 
 class UserController extends Controller
 {
     /**
-     * Muestra una lista de usuarios con rol 0.
+     * @OA\Get(
+     *     path="/api/users",
+     *     summary="Obtener la lista de usuarios con rol 0.",
+     *     @OA\Response(response="200", description="OK"),
+     * )
      */
     public function index()
     {
@@ -17,7 +22,23 @@ class UserController extends Controller
     }
 
     /**
-     * Almacena un nuevo usuario en el almacenamiento.
+     * @OA\Post(
+     *     path="/api/users",
+     *     summary="Registrar un nuevo usuario.",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="last_name", type="string"),
+     *             @OA\Property(property="dni", type="string"),
+     *             @OA\Property(property="email", type="string"),
+     *             @OA\Property(property="password", type="string"),
+     *             @OA\Property(property="points", type="integer"),
+     *         )
+     *     ),
+     *     @OA\Response(response="201", description="Usuario registrado."),
+     *     @OA\Response(response="422", description="Error de validación.")
+     * )
      */
     public function store(Request $request)
     {
@@ -43,7 +64,19 @@ class UserController extends Controller
     }
 
     /**
-     * Muestra el usuario especificado.
+     * @OA\Get(
+     *     path="/api/users/{id}",
+     *     summary="Obtener información de un usuario específico.",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del usuario",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="OK"),
+     *     @OA\Response(response="404", description="Usuario no encontrado.")
+     * )
      */
     public function show($id)
     {
@@ -51,7 +84,31 @@ class UserController extends Controller
     }
 
     /**
-     * Actualiza el usuario especificado en el almacenamiento.
+     * @OA\Put(
+     *     path="/api/users/{user}",
+     *     summary="Actualizar información de un usuario específico.",
+     *     @OA\Parameter(
+     *         name="user",
+     *         in="path",
+     *         description="Usuario a actualizar",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="last_name", type="string"),
+     *             @OA\Property(property="dni", type="string"),
+     *             @OA\Property(property="email", type="string"),
+     *             @OA\Property(property="password", type="string"),
+     *             @OA\Property(property="points", type="integer"),
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Usuario actualizado."),
+     *     @OA\Response(response="404", description="Usuario no encontrado."),
+     *     @OA\Response(response="422", description="Error de validación.")
+     * )
      */
     public function update(StoreUserRequest $request, User $user)
     {
@@ -73,11 +130,23 @@ class UserController extends Controller
             'points' => $request->points,
         ]);
 
-        return response()->json(['status' => 'Usuario actualizado'], 200);
+        return response()->json(['status' => 'Usuario actualizado.'], 200);
     }
 
     /**
-     * Elimina el usuario especificado del almacenamiento.
+     * @OA\Delete(
+     *     path="/api/users/{user}",
+     *     summary="Eliminar un usuario específico.",
+     *     @OA\Parameter(
+     *         name="user",
+     *         in="path",
+     *         description="Usuario a eliminar",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Usuario eliminado."),
+     *     @OA\Response(response="404", description="Usuario no encontrado.")
+     * )
      */
     public function destroy(User $user)
     {

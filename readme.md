@@ -36,3 +36,6 @@
     npm install
     npm run start
 
+### Notas
+- Se implementó una documentación de la API con swagger, para acceder a esta, se debe ingresar al siguiente endpoint:
+http://127.0.0.1:8000/api/documentation
