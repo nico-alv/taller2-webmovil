@@ -1,41 +1,88 @@
-# Taller N°2 - Intro. al desarrollo web/móvil
-## Pasos a seguir:
+# Taller N°2 - Sistema Dumbo
+![GitHub last commit](https://img.shields.io/github/last-commit/nico-alv/taller2-webmovil/main)
 
-### Instalacion del servidor
+[![Image from Gyazo](https://i.gyazo.com/d583f9515331b027cf7b3ff47b8bfe70.gif)](https://gyazo.com/d583f9515331b027cf7b3ff47b8bfe70)
 
-- [Instalar MySQL Server y MySQL workbench.](https://dev.mysql.com/downloads/installer/) 
+Solución para el segundo taller de la asignatura de introducción al desarrollo web móvil en la cual se pide realizar un CRUD de usuarios y un inicio de sesión de administradores con JSON Web Tokens.
 
-- Entrar a la base de datos creada mediante mysql workbench con las credenciales ingresadas en la instalacion o entrar mediante una terminal con el comando mysql -u root -p (en caso de que este no funcione se debe añadir la carpeta "C:\Program Files\MySQL\MySQL Server 5.5\bin\" a las variables de entorno)
-- Crear un nuevo schema: ejecutar create database taller-2;
+----
 
 ### Dependencias
 
-- [Instalar Composer.](https://getcomposer.org)
+1. [XAMPP](https://sourceforge.net/projects/xampp/)
 
-- [Instalar Node.js.](https://nodejs.org/en)
+2. [Composer](https://getcomposer.org)
 
-#### Backend:
-    Abrir una terminal dentro de la carpeta raíz del proyecto
-    - cd .\backend\ 
-    - copy .env.example .env 
-    - Dentro de este archivo configurar el puerto, nombre, usuario y contraseña de la base de datos creada previamente.
+3. [Node.js](https://nodejs.org/en)
 
-    Luego, ejecutar los siguientes comandos:
+4. [Git](https://git-scm.com/downloads)
 
-    composer install
-    php artisan key:generate
-    php artisan migrate:fresh
-    php artisan db:seed
-    php artisan serve
+> Se debe tener cuidado de instalar composer después de XAMPP ya que este último es responsable de la instalación de PHP.
 
+### Levantando el proyecto
+- Clona el repositorio a tu máquina local.
+- Iniciar Apache y MySQL en el panel de control de XAMPP.
+- Abrir http://localhost/phpmyadmin/ y crear nueva base de datos.
+- Abrir una terminal dentro de la carpeta raíz del proyecto. 
 
-#### Frontend:
-    Luego, abrir otra terminal en la raiz del proyecto y ejecutar:
+### Backend
 
-    cd .\frontend\
-    npm install
-    npm run start
+Entra al directorio del backend, copia el archivo .env.example.
+```
+cd .\backend\ 
+```
+```
+copy .env.example .env 
+```
+Dentro de este archivo configurar el puerto, nombre, usuario y contraseña de la base de datos creada previamente.
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=taller2
+DB_USERNAME=root
+DB_PASSWORD=
+```
+Instalar las dependencias de composer.json.
+```
+composer install
+```
+```
+php artisan key:generate
+```
+Generar la llave con la que se cifrarán los tokens.
+```
+php artisan jwt:secret
+```
+Ejecutar migraciones y seeders.
+```
+php artisan migrate:fresh --seed
+```
+Arrancar el backend.
+```
+php artisan serve
+```
 
-### Notas
+#### Frontend
+Luego, abrir otra terminal en la raiz del proyecto y ejecutar:
+```
+cd .\frontend\
+```
+Instalar dependencias guardadas en package.json.
+```
+npm install
+```
+Arrancar el frontend.
+```
+npm run start
+```
+
+----
+
+#### Uso
+- Para entrar al frontend accede a http://localhost:3000.
+- Para probar la API separadamente, puedes utilizar Postman o herramientas similares.
+
+#### Notas
 - Se implementó una documentación de la API con swagger, para acceder a esta, se debe ingresar al siguiente endpoint:
 http://127.0.0.1:8000/api/documentation
